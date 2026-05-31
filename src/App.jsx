@@ -3,7 +3,6 @@ import SectionIndicator from "./components/SectionIndicator";
 import Main from "./components/Main";
 import Work from "./components/Work";
 import gsap from "gsap";
-import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { SplitText } from "gsap/all";
@@ -13,7 +12,7 @@ import { isDesktop, isMobile } from "react-device-detect";
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
-  const [workText, setWorkText] = useState("Made/Making This");
+  const workText = "Yang Pernah Saya Buat";
 
   const heroRef = useRef();
   const mainRef = useRef();
@@ -33,13 +32,29 @@ function App() {
       let {isMobile} = context.conditions;
       
       let end = isMobile ? "+=400" : "+=800"
+      let heroZoomEnd = isMobile ? "+=260" : "+=420"
       
+      // Hero zoom out
+      const heroZoomTl = gsap.timeline({
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: heroZoomEnd,
+          scrub: 1
+        }
+      })
+
+      heroZoomTl
+        .fromTo(".hero-zoom", {scale: isMobile ? 1.16 : 1.42}, {scale: 1})
+        .fromTo(".hero-code-badge", {xPercent: isMobile ? 0 : 12, opacity: .65}, {xPercent: 0, opacity: 1}, "<");
+
       // Hero out, Main in
       const mainInTl = gsap.timeline({
         ease: "power2.inOut",
         scrollTrigger: {
           trigger: document.body,
-          start: "top top",
+          start: isMobile ? "260 top" : "420 top",
           end: end,
           scrub: 1
         }
@@ -112,13 +127,6 @@ function App() {
           start: isMobile ? "1600 top" : "3200 top",
           end: isMobile ? "+=800" : "+=1600",
           scrub: 1,
-            onUpdate: (self) => {
-              if (self.progress > .01) {
-                setWorkText("Thank You!")
-              } else {
-                setWorkText("Made/Making This")
-              }
-            }
           }
         })
     
@@ -147,8 +155,8 @@ function App() {
   }, [])
 
   return (
-    <div className="md:h-1400 h-800 w-full bg-dark text-light font-serif">
-      <div className="welcoming-container h-svh w-full bg-dark fixed z-51 flex justify-center items-center text-2xl font-sans">
+    <div className="md:h-1400 h-800 w-full bg-paper text-ink font-serif">
+      <div className="welcoming-container h-svh w-full bg-paper text-ink fixed z-51 flex justify-center items-center text-2xl font-sans">
         <p id="welcoming-text">Get Ready!!</p>
       </div>
       <SectionIndicator />
@@ -156,10 +164,10 @@ function App() {
         <Hero />
       </div>
       <div className="fixed z-48" ref={mainRef}>
-        <div className="overlay-white absolute h-full w-full scale-200 bg-light"></div>
+        <div className="overlay-white absolute h-full w-full scale-200 bg-paper"></div>
         <Main />
       </div>
-      <div className="work-text h-svh w-full bg-light fixed z-49 font-sans font-bold lg:text-8xl md:text-5xl sm:text-3xl text-dark flex justify-center items-center">
+      <div className="work-text h-svh w-full bg-paper fixed z-49 font-sans font-bold lg:text-7xl md:text-6xl text-4xl text-ink flex justify-center items-center text-center px-6 leading-tight pointer-events-none">
         {workText}
       </div>
       <div className="fixed z-50" ref={workRef}>

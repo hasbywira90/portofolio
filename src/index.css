@@ -5,10 +5,15 @@ html, body {
 }
 
 @theme {
-  --color-dark: oklch(21% 0.006 285.885);
-  --color-dark-100: oklch(27.4% 0.006 286.033);
+  --color-dark: oklch(31% 0.04 165);
+  --color-dark-100: oklch(40% 0.04 165);
   --color-light: oklch(98.5% 0 0);
   --color-light-100: oklch(70.5% 0.015 286.067);
+  --color-ink: oklch(26% 0.05 225);
+  --color-paper: oklch(97% 0.035 110);
+  --color-accent: oklch(64% 0.14 150);
+  --color-warm: oklch(74% 0.13 36);
+  --color-coral: oklch(70% 0.15 24);
 
   --font-sans: 'Montserrat Alternates', sans;
   --font-serif: 'Playfair', sans;

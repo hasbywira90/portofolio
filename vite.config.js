@@ -8,5 +8,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: "/portofolio",
+  base: process.env.VERCEL ? "/" : "/portofolio/",
 })
