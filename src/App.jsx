@@ -5,9 +5,7 @@ import Work from "./components/Work";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
-import { SplitText } from "gsap/all";
 import { ScrollTrigger } from "gsap/all";
-import { isDesktop, isMobile } from "react-device-detect";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +17,12 @@ function App() {
   const workRef = useRef();
 
   useGSAP(() => {
+    gsap.set(".section-indicator-container", {opacity: 0, y: 25});
+    gsap.set(".animation-showup", {opacity: 0, y: 25});
+    gsap.set(".hero-title-hasby", {opacity: 0});
+    gsap.set(".hero-title-rest", {opacity: 0, y: 18});
+    gsap.set(".welcoming-name", {x: 0, y: 0, scale: 1, opacity: 1, transformOrigin: "0 0"});
+
     ScrollTrigger.normalizeScroll({
       allowNestedScroll: true,
       lockAxis: true,
@@ -32,22 +36,73 @@ function App() {
       let {isMobile} = context.conditions;
       
       let end = isMobile ? "+=400" : "+=800"
-      let heroZoomEnd = isMobile ? "+=260" : "+=420"
+      const welcomeTl = gsap.timeline({
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: document.body,
+          start: "top top",
+          end: isMobile ? "+=300" : "+=440",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        }
+      })
+
+      const getNameMove = () => {
+        const welcomeName = document.querySelector(".welcoming-name");
+        const targetName = document.querySelector(".hero-title-hasby");
+
+        if (!welcomeName || !targetName) {
+          return {x: 0, y: 0, scale: 1};
+        }
+
+        gsap.set(welcomeName, {x: 0, y: 0, scale: 1});
+
+        const start = welcomeName.getBoundingClientRect();
+        const target = targetName.getBoundingClientRect();
+        const scale = target.width / start.width;
+
+        return {
+          x: target.left - start.left,
+          y: target.top - start.top,
+          scale,
+        };
+      }
+
+      let nameMove = getNameMove();
+
+      welcomeTl
+        .to(".welcoming-label", {opacity: 0, y: -24, duration: .18})
+        .to(".welcoming-name", {
+          x: () => {
+            nameMove = getNameMove();
+            return nameMove.x;
+          },
+          y: () => nameMove.y,
+          scale: () => nameMove.scale,
+          duration: .72,
+          ease: "none",
+        }, "<")
+        .to(".welcoming-bg", {opacity: 0, duration: .3}, "<.42")
+        .set(".welcoming-name", {opacity: 0})
+        .set(".hero-title-hasby", {opacity: 1})
+        .to(".hero-title-rest", {opacity: 1, y: 0, duration: .22})
+        .set(".welcoming-container", {pointerEvents: "none"})
+        .to(".animation-showup", {opacity: 1, y: 0, duration: .24}, "<.08")
+        .to(".section-indicator-container", {opacity: 1, y: 0, duration: .24}, "<.06");
       
-      // Hero zoom out
+      // Hero badge settle
       const heroZoomTl = gsap.timeline({
         ease: "power2.out",
         scrollTrigger: {
           trigger: document.body,
           start: "top top",
-          end: heroZoomEnd,
+          end: isMobile ? "+=260" : "+=420",
           scrub: 1
         }
       })
 
       heroZoomTl
-        .fromTo(".hero-zoom", {scale: isMobile ? 1.16 : 1.42}, {scale: 1})
-        .fromTo(".hero-code-badge", {xPercent: isMobile ? 0 : 12, opacity: .65}, {xPercent: 0, opacity: 1}, "<");
+        .fromTo(".hero-code-badge", {xPercent: isMobile ? 0 : 12, opacity: .65}, {xPercent: 0, opacity: 1});
 
       // Hero out, Main in
       const mainInTl = gsap.timeline({
@@ -135,39 +190,27 @@ function App() {
           .to(mainRef.current, {opacity: 0, duration: .05}, "<")
     })
 
-    const heroSplit = new SplitText(".title", {type: 'chars, words'});
-    gsap.set(".animation-showup", {opacity: 0, y: "+=25"});
-    gsap.set(heroSplit.chars, {opacity: 0, yPercent: 100});
-
-    // Intro
-    const introTl = gsap.timeline();
-
-    introTl
-    .fromTo("#welcoming-text", {opacity: 0}, {opacity: 1, delay: .5, duration: 2})
-    .to("#welcoming-text", {scale: 1.5, duration: 1, ease: "power1.inOut"})
-    .to("#welcoming-text", {y: "120vw", delay: .5, duration: 1, ease: "power2.out"})
-    .fromTo(".section-indicator-container", {y: "+=25"}, {opacity:1, y: "-=25", delay: .25, duration: 1})
-    .to(".welcoming-container", {opacity: 0, duration: 1, onComplete: () => {gsap.set(".welcoming-container", {display: "none"})}}, "<")
-    .to(heroSplit.chars, {opacity: 1, yPercent: 0, duration: 1, ease: "expo.out", stagger: .06}, "<")
-    .to(".animation-showup",  {opacity: 1, y: "-=25", duration: 1}, "<");
-
     return () => mm.revert();
   }, [])
 
   return (
-    <div className="md:h-1400 h-800 w-full bg-paper text-ink font-serif">
-      <div className="welcoming-container h-svh w-full bg-paper text-ink fixed z-51 flex justify-center items-center text-2xl font-sans">
-        <p id="welcoming-text">Get Ready!!</p>
+    <div className="md:h-1400 h-800 w-full page-gradient text-ink font-serif">
+      <div className="welcoming-container h-svh w-full text-ink fixed z-51 flex justify-center items-center font-sans overflow-hidden pointer-events-auto">
+        <div className="welcoming-bg absolute inset-0 page-gradient"></div>
+        <div className="welcoming-content relative text-center px-6">
+          <p className="welcoming-label text-coral md:text-3xl text-lg font-semibold">ayo mulai mengenal</p>
+          <p className="welcoming-name inline-block text-[clamp(5.5rem,24vw,18rem)] leading-none font-bold tracking-normal">Hasby</p>
+        </div>
       </div>
       <SectionIndicator />
       <div className="fixed z-47" ref={heroRef}>
         <Hero />
       </div>
       <div className="fixed z-48" ref={mainRef}>
-        <div className="overlay-white absolute h-full w-full scale-200 bg-paper"></div>
+        <div className="overlay-white absolute h-full w-full scale-200 page-gradient"></div>
         <Main />
       </div>
-      <div className="work-text h-svh w-full bg-paper fixed z-49 font-sans font-bold lg:text-7xl md:text-6xl text-4xl text-ink flex justify-center items-center text-center px-6 leading-tight pointer-events-none">
+      <div className="work-text h-svh w-full page-gradient fixed z-49 font-sans font-bold lg:text-7xl md:text-6xl text-4xl text-ink flex justify-center items-center text-center px-6 leading-tight pointer-events-none">
         {workText}
       </div>
       <div className="fixed z-50" ref={workRef}>

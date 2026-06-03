@@ -4,7 +4,7 @@ import profilePhoto from "../assets/gambar_hasby.jpg";
 
 function ProfilePhoto() {
     return (
-        <div className="relative md:w-44 w-28 aspect-[3/4] shrink-0 overflow-hidden bg-paper text-ink flex items-center justify-center font-sans font-bold md:text-4xl text-2xl border-4 border-accent shadow-[8px_8px_0_0_rgba(42,157,111,0.22)]">
+        <div className="relative md:w-44 w-28 aspect-[3/4] shrink-0 overflow-hidden rounded-md bg-paper text-ink flex items-center justify-center font-sans font-bold md:text-4xl text-2xl border-4 border-accent shadow-[8px_8px_0_0_rgba(42,116,111,0.14)]">
             <span>HW</span>
             <img
                 src={profilePhoto}
@@ -110,7 +110,7 @@ function Main() {
     return (
         <div className="main-container min-h-svh w-full md:p-8 p-4 flex md:overflow-hidden overflow-y-auto">
             <div className="w-full grid md:grid-cols-2 grid-cols-1 md:grid-rows-[auto_auto] md:gap-x-10 md:gap-y-8 gap-6 content-center items-start">
-                <div className="is-container self-start bg-light md:p-8 p-5 text-ink font-sans flex md:flex-row flex-col md:items-start items-center md:gap-7 gap-5 border-l-8 border-accent shadow-[10px_10px_0_0_rgba(42,157,111,0.14)]">
+                <div className="is-container self-start rounded-md bg-light md:p-8 p-5 text-ink font-sans flex md:flex-row flex-col md:items-start items-center md:gap-7 gap-5 border-l-8 border-accent shadow-[10px_10px_0_0_rgba(42,116,111,0.1)]">
                     <ProfilePhoto />
                     <p className="lg:text-xl/8 md:text-lg/8 text-sm leading-7 md:text-left text-justify">
                         I am a software engineering student, I have an interest in trying many new things, I am also good at communicating and building good teamwork, I also often participate in several competitions related to my major.

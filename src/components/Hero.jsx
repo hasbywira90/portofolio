@@ -2,9 +2,15 @@ import { IoCodeSlash, IoLogoGithub, IoLogoInstagram } from "react-icons/io5";
 
 export default function Hero() {
     return (
-        <div className="h-svh w-full bg-paper text-ink grid md:grid-cols-[1.25fr_.75fr] grid-cols-1 md:p-8 p-6 md:gap-8 gap-6 overflow-hidden">
+        <div className="h-svh w-full page-gradient text-ink grid md:grid-cols-[1.25fr_.75fr] grid-cols-1 md:p-8 p-6 md:gap-8 gap-6 overflow-hidden">
             <div className="hero-zoom flex flex-col md:justify-center justify-center md:items-start items-center origin-left md:-translate-y-10">
-                <h1 className="title lg:w-5/6 md:w-full font-sans lg:text-[7rem]/[.95] md:text-7xl text-4xl md:text-left text-center font-bold">Hasby Wira Al Muflih</h1>
+                <h1 className="title lg:w-5/6 md:w-full font-sans text-[clamp(2.8rem,8.4vw,7rem)] leading-[.95] md:text-left text-center font-bold">
+                    <span className="block">
+                        <span className="hero-title-hasby">Hasby</span>
+                        <span className="hero-title-rest"> Wira</span>
+                    </span>
+                    <span className="hero-title-rest block text-accent">Al Muflih</span>
+                </h1>
                 <p className="animation-showup mt-6 md:w-72 md:text-2xl md:text-start text-base text-center font-light text-coral">To become a star you must burn.</p>
                 <div className="animation-showup mt-6 flex items-center md:justify-start justify-center gap-4">
                     <a href="https://github.com/hasbywira90" target="_blank" rel="noreferrer" aria-label="GitHub profile" className="text-4xl text-accent hover:text-coral transition-colors">

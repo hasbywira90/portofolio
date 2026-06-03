@@ -3,6 +3,11 @@ import { createPortal } from "react-dom";
 import { IoChevronBack, IoChevronForward, IoClose } from "react-icons/io5";
 import gameLastChanceImage from "../assets/Game Last Chance.jpg";
 import lokalverseUmkmImage from "../assets/website lokalverse umkm.jpg";
+import schoolCalculatorImage from "../assets/websekolah/websekolahkalkulator.jpg";
+import schoolHomeImage from "../assets/websekolah/websekolah.jpg";
+import schoolPrestasiImage from "../assets/websekolah/websekolahprestasisekolah.jpg";
+import schoolProfileImage from "../assets/websekolah/websekolahprofil.jpg";
+import schoolTesMinatImage from "../assets/websekolah/websekolahtesminatbakat.jpg";
 import susiDemoImage from "../assets/website susi/website susi demos.jpg";
 import susiUploadForumImage from "../assets/website susi/website susi forum unggahan.jpg";
 import susiForumImage from "../assets/website susi/Website susi forum.jpg";
@@ -18,6 +23,14 @@ const susiGallery = [
     susiForumImage,
     susiUploadForumImage,
     susiDemoImage,
+];
+
+const schoolGallery = [
+    schoolHomeImage,
+    schoolProfileImage,
+    schoolPrestasiImage,
+    schoolCalculatorImage,
+    schoolTesMinatImage,
 ];
 
 const timeManagementGallery = [
@@ -101,7 +114,7 @@ function WorkCard({imageOnBottom, name, description, image, gallery, onOpenGalle
                 type="button"
                 onClick={() => onOpenGallery({name, gallery: projectGallery})}
                 style={{ backgroundImage: `url(${cardImage})` }}
-                className={`${imageOrder} aspect-video w-full bg-light bg-center bg-contain bg-no-repeat overflow-hidden border-4 border-accent cursor-pointer text-left shadow-[8px_8px_0_0_rgba(42,157,111,0.16)]`}
+                className={`${imageOrder} aspect-video w-full bg-light bg-center bg-contain bg-no-repeat overflow-hidden border-4 border-accent cursor-pointer text-left shadow-[8px_8px_0_0_rgba(42,116,111,0.12)]`}
             >
                 <h2 className={`h-full w-full transition-all ease-in-out duration-300 bg-ink/35 hover:bg-accent/65 text-paper font-bold md:text-4xl text-xl font-sans flex md:justify-center md:items-center justify-start ${imageTitle} p-5`}>{name}</h2>
             </button>
@@ -138,10 +151,10 @@ export default function Work() {
 
     return (
         <>
-            <div className="work-container h-svh min-w-full flex items-center bg-paper text-ink md:px-16 px-5 md:gap-16 gap-7 overflow-hidden">
+            <div className="work-container h-svh min-w-full flex items-center page-gradient text-ink md:px-16 px-5 md:gap-16 gap-7 overflow-hidden">
                 <WorkCard onOpenGallery={openGallery} image={gameLastChanceImage} gallery={[gameLastChanceImage]} name="Game Last Chance" description="A game development project created as part of my learning process in software engineering, focusing on gameplay flow, interaction, and technical implementation."/>
                 <WorkCard onOpenGallery={openGallery} imageOnBottom={true} image={susiHomeImage} gallery={susiGallery} name="Pembuatan Website SUSI (Suara Siswa)" description="A student voice website project designed to provide a digital platform for collecting, organizing, and presenting student feedback."/>
-                <WorkCard onOpenGallery={openGallery} name="Memodifikasi Website Sekolah SMKN 4 Bandung" description="A school website improvement project focused on updating the interface, refining content structure, and supporting a better user experience."/>
+                <WorkCard onOpenGallery={openGallery} image={schoolHomeImage} gallery={schoolGallery} name="Memodifikasi Website Sekolah SMKN 4 Bandung" description="A school website improvement project focused on updating the interface, refining content structure, and supporting a better user experience."/>
                 <WorkCard onOpenGallery={openGallery} imageOnBottom={true} image={lokalverseUmkmImage} gallery={[lokalverseUmkmImage]} name="Website Pendukung UMKM" description="A website project built to support small businesses by helping them present products, information, and business identity through a digital platform."/>
                 <WorkCard onOpenGallery={openGallery} image={timeManagementHomeImage} gallery={timeManagementGallery} name="Time Management" description="A website project designed to help users organize schedules, manage tasks, and improve productivity through a simple time management system."/>
                 {/* <WorkCard name="Bell's After Dark" description="Inspired by [inspiration], [Project Name] combines a [aesthetic style] interface with modern functionality. Built using [tech stack], I focused on high-quality typography and intuitive navigation to create a digital space that is both beautiful and functional."/> */}
